@@ -28,6 +28,7 @@ model User{
   email String
   role ROLES @default(USER)
   blogs Post[]
+  comments Comment[]
 }
 
 model Post {
@@ -37,4 +38,33 @@ model Post {
   published Boolean @default(false)
   userId  Int
   user    User    @relation(fields: [userId], references: [id])
+  comments Comment[]
+  category PostCategory[]
+  publishDate DateTime?
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @default(now())
+}
+
+model Comment{
+  id Int @id @default(autoincrement())
+  userId Int
+  user User @relation(fields: [userId], references: [id])
+  postId Int
+  post Post @relation(fields: [postId], references: [id])
+  message String
+  createdAt DateTime? @default(now())
+}
+
+model Category{
+  id Int @id @default(autoincrement())
+  type String
+  posts PostCategory[]
+}
+
+model PostCategory{
+  postId Int
+  post Post @relation(fields: [postId], references: [id])
+  categoryId Int
+  category Category @relation(fields: [categoryId], references: [id])
+  @@id([categoryId, postId])
 }
