@@ -6,5 +6,5 @@ interface IConfig{
 }
 
 export const config:IConfig = {
-    port: parseInt(new String(process.env.PORT).toString()),
+    port: parseInt(new String(process.env.PORT).toString()) || 3000,
 }
