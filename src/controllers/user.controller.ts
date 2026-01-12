@@ -21,7 +21,7 @@ const signup = asyncHandler(async(req:Request, res:Response, _:NextFunction)=>{
     const hash = await bcrypt.hash(password, 10);
     const user = await createUser({username, email, password:hash});
     const token = jwt.sign({id:user.id}, config.jwtUserSecret);
-    return res.status(201).json(new ApiResponse(201, {user, token}, "User sent successfully"));
+    return res.status(201).cookie("auth_user_token", token).json(new ApiResponse(201, {user, token}, "User sent successfully"));
 });
 
 export {signup};
