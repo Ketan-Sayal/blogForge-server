@@ -9,6 +9,7 @@ export const createUser = async({username, email, password}:IUser)=>{
             password
         },
         select:{
+            id:true,
             username:true,
             email:true,
             blogs:true,
@@ -24,6 +25,7 @@ export const getUserById = async(id:number)=>{
             id:id
         },
         select:{
+            id:true,
             username:true,
             email:true,
             blogs:true,
@@ -58,4 +60,18 @@ export const updatePassword = async({password, email}:IUpdatePassword)=>{
         }
     });
     return res;
+}
+
+export const getUserByEmail = async(email:string)=>{
+    const user = await client.user.findFirst({
+        where:{
+            email:email
+        },
+        select:{
+            id:true,
+            username:true,
+            email:true,
+        }
+    });
+    return user;
 }

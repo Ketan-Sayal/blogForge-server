@@ -1,10 +1,10 @@
 class ApiResponse{
-    data:any;
+    data:Object;
     success:boolean;
     message:string;
     statusCode:number;
 
-    constructor(statusCode:number, data:any, message:string="Success"){
+    constructor(statusCode:number, data:Object, message:string="Success"){
         this.data = data;
         this.success = statusCode<400;
         this.message = message;
