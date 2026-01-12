@@ -7,6 +7,6 @@ interface IConfig{
 }
 
 export const config:IConfig = {
-    port: parseInt(new String(process.env.PORT).toString()) || 3000,
+    port: parseInt(new String(process.env.PORT || 3000).toString()),
     jwtUserSecret: new String(process.env.JWT_USER_SECRET).toString(),
 }
