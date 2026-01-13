@@ -2,7 +2,8 @@ import {prisma as client} from "../lib/prisma.js";
 import type { IUpdatePassword, IUser } from "../types/index.js";
 
 export const createUser = async({username, email, password}:IUser)=>{
-    const res = await client.user.create({
+    try {
+        const res = await client.user.create({
         data:{
             username,
             email,
@@ -17,10 +18,19 @@ export const createUser = async({username, email, password}:IUser)=>{
         }
     });
     return res;
+    } catch (error) {
+        if(error instanceof Error){
+            console.log(error.message);
+            return;
+        }
+        console.log(error);
+        return null;
+    }
 }
 
 export const getUserById = async(id:number)=>{
-    const user = await client.user.findFirst({
+    try {
+        const user = await client.user.findFirst({
         where:{
             id:id
         },
@@ -33,10 +43,19 @@ export const getUserById = async(id:number)=>{
         }
     });
     return user;
+    } catch (error) {
+        if(error instanceof Error){
+            console.log(error.message);
+            return;
+        }
+        console.log(error);
+        return null;
+    }
 }
 
 export const getUserBlogs = async(id:number)=>{
-    const userBlogs = await client.user.findFirst({
+    try {
+        const userBlogs = await client.user.findFirst({
         where:{
             id:id,
         },
@@ -45,10 +64,19 @@ export const getUserBlogs = async(id:number)=>{
         }
     });
     return userBlogs;
+    } catch (error) {
+        if(error instanceof Error){
+            console.log(error.message);
+            return;
+        }
+        console.log(error);
+        return null;
+    }
 }
 
 export const updatePassword = async({password, email}:IUpdatePassword)=>{
-    const res = await client.user.update({
+    try {
+        const res = await client.user.update({
         where:{
             email:email
         },
@@ -60,10 +88,19 @@ export const updatePassword = async({password, email}:IUpdatePassword)=>{
         }
     });
     return res;
+    } catch (error) {
+        if(error instanceof Error){
+            console.log(error.message);
+            return;
+        }
+        console.log(error);
+        return null;
+    }
 }
 
 export const getUserByEmail = async(email:string)=>{
-    const user = await client.user.findFirst({
+    try {
+        const user = await client.user.findFirst({
         where:{
             email:email
         },
@@ -74,4 +111,33 @@ export const getUserByEmail = async(email:string)=>{
         }
     });
     return user;
+    } catch (error) {
+        if(error instanceof Error){
+            console.log(error.message);
+            return;
+        }
+        console.log(error);
+        return null;
+    }
+}
+
+export const getUserPassword = async(id:number)=>{
+    try {
+        const user = await client.user.findFirst({
+            where:{
+                id:id,
+            },
+            select:{
+                password:true,
+            }
+        });
+        return user?.password;
+    } catch (error) {
+        if(error instanceof Error){
+            console.log(error.message);
+            return;
+        }
+        console.log(error);
+        return null;
+    }
 }

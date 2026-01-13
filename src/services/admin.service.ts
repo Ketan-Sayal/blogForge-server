@@ -2,7 +2,8 @@ import {prisma as client, ROLES} from "../lib/prisma.js";
 import type {IUpdatePassword,  IUser } from "../types/index.js";
 
 export const createAdmin = async({username, email, password}:IUser)=>{
-    const res = await client.user.create({
+    try {
+        const res = await client.user.create({
         data:{
             username,
             email,
@@ -10,6 +11,7 @@ export const createAdmin = async({username, email, password}:IUser)=>{
             role:ROLES.ADMIN
         },
         select:{
+            id:true,
             username:true,
             email:true,
             blogs:true,
@@ -17,15 +19,26 @@ export const createAdmin = async({username, email, password}:IUser)=>{
         }
     });
     return res;
+    } catch (error) {
+        if(error instanceof Error){
+            console.log(error.message);
+            return;
+        }
+        console.log(error);
+        return null;
+    }
 }
 
 export const getAdminById = async(id:number)=>{
-    const user = await client.user.findFirst({
+    
+    try {
+        const user = await client.user.findFirst({
         where:{
             id:id,
             role:ROLES.ADMIN
         },
         select:{
+            id:true,
             username:true,
             email:true,
             blogs:true,
@@ -33,10 +46,20 @@ export const getAdminById = async(id:number)=>{
         }
     });
     return user;
+    } catch (error) {
+        if(error instanceof Error){
+            console.log(error.message);
+            return;
+        }
+        console.log(error);
+        return null;
+    }
 }
 
 export const blockPost = async(postId:number)=>{
-    const res = await client.post.update({
+    
+    try {
+        const res = await client.post.update({
         where:{
             id:postId
         },
@@ -45,18 +68,38 @@ export const blockPost = async(postId:number)=>{
         }
     });
     return res;
+    } catch (error) {
+        if(error instanceof Error){
+            console.log(error.message);
+            return;
+        }
+        console.log(error);
+        return null;
+    }
 }
 
 export const deletePost = async(postId:number)=>{
-    await client.post.delete({
+    
+    try {
+        await client.post.delete({
         where:{
             id:postId
         }
     });
+    } catch (error) {
+        if(error instanceof Error){
+            console.log(error.message);
+            return;
+        }
+        console.log(error);
+        return null;
+    }
 }
 
 export const unblockPost = async(postId:number)=>{
-    const res = await client.post.update({
+    
+    try {
+        const res = await client.post.update({
         where:{
             id:postId
         },
@@ -65,4 +108,12 @@ export const unblockPost = async(postId:number)=>{
         }
     });
     return res;
+    } catch (error) {
+        if(error instanceof Error){
+            console.log(error.message);
+            return;
+        }
+        console.log(error);
+        return null;
+    }
 }
