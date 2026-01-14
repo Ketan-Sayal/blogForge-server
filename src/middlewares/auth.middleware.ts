@@ -1,8 +1,8 @@
 import type { Response, Request, NextFunction } from "express"
-import { ApiError } from "../utils/ApiError"
+import { ApiError } from "../utils/ApiError.js"
 import jwt, { type JwtPayload } from "jsonwebtoken"
-import { config } from "../config";
-import { getUserById } from "../services/user.service";
+import { config } from "../config/index.js";
+import { getUserById } from "../services/user.service.js";
 
 export const isLoggedIn = async(req:Request, res:Response, next:NextFunction)=>{
     try {
