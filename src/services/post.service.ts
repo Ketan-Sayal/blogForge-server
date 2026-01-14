@@ -1,0 +1,1 @@
+import {prisma as client} from "../lib/prisma.js";

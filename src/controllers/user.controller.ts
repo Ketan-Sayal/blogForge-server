@@ -50,4 +50,10 @@ const signin = asyncHandler(async(req:Request, res:Response, _:NextFunction)=>{
     return res.status(200).cookie("auth_user_token", token).json(new ApiResponse(200, {user, token}, "User logged in successfully"));
 });
 
-export {signup, signin};
+const getUser = asyncHandler(async(req:Request, res:Response, _:NextFunction)=>{
+    const userId = req.userId;
+    const user = await getUserById(userId || -1);
+    return res.status(200).json(new ApiResponse(200, {user}, "User sent successfully"));
+});
+
+export {signup, signin, getUser};
