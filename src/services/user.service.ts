@@ -21,7 +21,7 @@ export const createUser = async({username, email, password}:IUser)=>{
     } catch (error) {
         if(error instanceof Error){
             console.log(error.message);
-            return;
+            return null;
         }
         console.log(error);
         return null;
@@ -46,7 +46,7 @@ export const getUserById = async(id:number)=>{
     } catch (error) {
         if(error instanceof Error){
             console.log(error.message);
-            return;
+            return null;
         }
         console.log(error);
         return null;
@@ -67,7 +67,7 @@ export const getUserBlogs = async(id:number)=>{
     } catch (error) {
         if(error instanceof Error){
             console.log(error.message);
-            return;
+            return null;
         }
         console.log(error);
         return null;
@@ -91,7 +91,7 @@ export const updatePassword = async({password, email}:IUpdatePassword)=>{
     } catch (error) {
         if(error instanceof Error){
             console.log(error.message);
-            return;
+            return null;
         }
         console.log(error);
         return null;
@@ -114,7 +114,7 @@ export const getUserByEmail = async(email:string)=>{
     } catch (error) {
         if(error instanceof Error){
             console.log(error.message);
-            return;
+            return null;
         }
         console.log(error);
         return null;
@@ -135,7 +135,7 @@ export const getUserPassword = async(id:number)=>{
     } catch (error) {
         if(error instanceof Error){
             console.log(error.message);
-            return;
+            return null;
         }
         console.log(error);
         return null;

@@ -19,3 +19,16 @@ export type IUpdateComment = {
     id:number;
     message:string
 }
+
+export type IPost = {
+    title: string;
+    content?:string;
+    userId:number;
+    publishedDate:Date;
+    categories:number[]
+}
+
+export type IPostCategory= {
+    categoryId:number,
+    postId:number
+}

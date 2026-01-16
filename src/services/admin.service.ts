@@ -22,7 +22,7 @@ export const createAdmin = async({username, email, password}:IUser)=>{
     } catch (error) {
         if(error instanceof Error){
             console.log(error.message);
-            return;
+            return null;
         }
         console.log(error);
         return null;
@@ -49,71 +49,21 @@ export const getAdminById = async(id:number)=>{
     } catch (error) {
         if(error instanceof Error){
             console.log(error.message);
-            return;
+            return null;
         }
         console.log(error);
         return null;
     }
 }
 
-export const blockPost = async(postId:number)=>{
-    
+export const blockUser = async(id:number)=>{
     try {
-        const res = await client.post.update({
-        where:{
-            id:postId
-        },
-        data:{
-            published:false
-        }
-    });
-    return res;
+        
     } catch (error) {
-        if(error instanceof Error){
+         if(error instanceof Error){
             console.log(error.message);
-            return;
         }
         console.log(error);
-        return null;
-    }
-}
-
-export const deletePost = async(postId:number)=>{
-    
-    try {
-        await client.post.delete({
-        where:{
-            id:postId
-        }
-    });
-    } catch (error) {
-        if(error instanceof Error){
-            console.log(error.message);
-            return;
-        }
-        console.log(error);
-        return null;
-    }
-}
-
-export const unblockPost = async(postId:number)=>{
-    
-    try {
-        const res = await client.post.update({
-        where:{
-            id:postId
-        },
-        data:{
-            published:true
-        }
-    });
-    return res;
-    } catch (error) {
-        if(error instanceof Error){
-            console.log(error.message);
-            return;
-        }
-        console.log(error);
-        return null;
+        return false;
     }
 }

@@ -27,6 +27,7 @@ model User{
   password String
   email String @unique
   role ROLES @default(USER)
+  isBlocked Boolean @default(false)
   blogs Post[]
   comments Comment[]
 }

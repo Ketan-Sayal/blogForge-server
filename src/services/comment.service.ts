@@ -45,7 +45,7 @@ export const updateComment = async({id, message}:IUpdateComment)=>{
     } catch (error) {
         if(error instanceof Error){
             console.log(error.message);
-            return;
+            return null;
         }
         console.log(error);
         return null;
@@ -63,7 +63,7 @@ export const deleteComment = async(id:number)=>{
     } catch (error) {
         if(error instanceof Error){
             console.log(error.message);
-            return;
+            return false;
         }
         console.log(error);
         return false;
