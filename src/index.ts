@@ -1,16 +1,8 @@
-import express from "express";
-import { config } from "./config/index.js";
+import {app} from "./app.js"
+import { config } from "./config/index.js"
 
-const app = express();
 const PORT = config.port || 3000;
-app.use(express.json());
-app.use(express.urlencoded({extended:true}));
 
-
-import userRouter from "./routes/user.routes.js";
-app.use("/api/v1/users", userRouter);
-
-
-app.listen(80, ()=>{
+app.listen(PORT, ()=>{
     console.log(`\nServer is running at: http://localhost:${PORT}`);
 });
