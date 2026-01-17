@@ -32,3 +32,9 @@ export type IPostCategory= {
     categoryId:number,
     postId:number
 }
+
+export type IUpdatePost = {
+    id:number;
+    title: string;
+    content?:string;
+}

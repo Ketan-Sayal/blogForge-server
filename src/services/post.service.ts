@@ -1,5 +1,5 @@
 import {prisma as client} from "../lib/prisma.js";
-import type { IPost } from "../types/index.js";
+import type { IPost, IUpdatePost } from "../types/index.js";
 import { pushCategoryToPost } from "./category.service.js";
 
 export const blockPost = async(postId:number)=>{
@@ -95,3 +95,81 @@ export const createPost = async (data: IPost) => {
     return null;
   }
 };
+
+export const updatePost = async(data:IUpdatePost)=>{
+    try {
+        const updatedPost = await client.post.update({
+            data:{
+                content:data.content || "",
+                title:data.title
+            },
+            where:{
+                id: data.id
+            }
+        })
+    } catch (error) {
+        if(error instanceof Error){
+            console.log(error.message);
+            return null;
+        }
+        console.log(error);
+        return null;
+    }
+}
+
+export const getPostById = async(id:number)=>{
+    try {
+        const post = await client.post.findFirst({
+            where:{
+                id:id
+            }
+        });
+        return post;
+    } catch (error) {
+        if(error instanceof Error){
+            console.log(error.message);
+            return null;
+        }
+        console.log(error);
+        return null;
+    }
+}
+
+export const getUserPosts = async(userId:number)=>{
+    try {
+        const posts = await client.post.findMany({
+            where:{
+                userId:userId
+            }
+        });
+        return posts;
+    } catch (error) {
+        if(error instanceof Error){
+            console.log(error.message);
+            return null;
+        }
+        console.log(error);
+        return null;
+    }
+}
+
+export const getPostByCategories = async(id:number)=>{
+    try {
+        const posts = await client.postCategory.findMany({
+            where:{
+                categoryId:id
+            },
+            select:{
+                post:true
+            }
+        });
+        return posts;
+    } catch (error) {
+        if(error instanceof Error){
+            console.log(error.message);
+            return null;
+        }
+        console.log(error);
+        return null;
+    }
+}

@@ -69,3 +69,21 @@ export const deleteComment = async(id:number)=>{
         return false;
     }
 }
+
+export const getPostComments = async(postId:number)=>{
+    try {
+        const comments = await client.comment.findMany({
+            where:{
+                postId:postId
+            }
+        });
+        return comments;
+    } catch (error) {
+        if(error instanceof Error){
+            console.log(error.message);
+            return null;
+        }
+        console.log(error);
+        return null;
+    }
+}
