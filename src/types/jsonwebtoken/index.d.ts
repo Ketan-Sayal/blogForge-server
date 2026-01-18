@@ -1,5 +1,6 @@
+import type {JwtPayload} from "jsonwebtoken";
 declare global {
-    interface JwtPayload {
+    interface JwtPayload implements JwtPayload {
         id?: number;
     }
 }

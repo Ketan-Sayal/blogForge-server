@@ -7,6 +7,7 @@ import { UserSigninSchema, UserSignupSchema } from "../validators/user.validator
 import { ApiError } from "../utils/ApiError.js";
 import { config } from "../config/index.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
+import { upload } from "../utils/Cloudinary.js";
 
 const signup = asyncHandler(async(req:Request, res:Response, _:NextFunction)=>{
     const {username, email, password} = req.body;
@@ -18,8 +19,16 @@ const signup = asyncHandler(async(req:Request, res:Response, _:NextFunction)=>{
     if(existingUser){
         throw new ApiError(403, "User already exists");
     }
+    const pic = req.file;
+    let picUrl = "";
+    let picPublicId="";
+    if(pic){
+        const res = await upload(pic.path);
+        picUrl = res.url;
+        picPublicId = res.publicId;
+    }
     const hash = await bcrypt.hash(password, 10);
-    const user = await createUser({username, email, password:hash});
+    const user = await createUser({username, email, password:hash, pic:picUrl, publicId:picPublicId});
     if(!user){
         throw new ApiError(500);
     }

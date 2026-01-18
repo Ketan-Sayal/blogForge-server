@@ -1,13 +1,15 @@
 import {prisma as client} from "../lib/prisma.js";
-import type { IUpdatePassword, IUser } from "../types/index.js";
+import type { IUpdatePassword, IUpdateUserPic, IUser, IUsername } from "../types/index.js";
 
-export const createUser = async({username, email, password}:IUser)=>{
+export const createUser = async({username, email, password, pic, publicId}:IUser)=>{
     try {
         const res = await client.user.create({
         data:{
             username,
             email,
-            password
+            password,
+            pic:pic || "https://cdn-icons-png.flaticon.com/128/456/456212.png",
+            publicId: publicId || ""
         },
         select:{
             id:true,
@@ -132,6 +134,49 @@ export const getUserPassword = async(id:number)=>{
             }
         });
         return user?.password;
+    } catch (error) {
+        if(error instanceof Error){
+            console.log(error.message);
+            return null;
+        }
+        console.log(error);
+        return null;
+    }
+}
+
+export const updateUsername = async(data:IUsername)=>{
+    try {
+        const updatedUser = await client.user.update({
+            where:{
+                email:data.email,
+            },
+            data:{
+                username:data.username
+            }
+        });
+        return updatedUser;
+    } catch (error) {
+        if(error instanceof Error){
+            console.log(error.message);
+            return null;
+        }
+        console.log(error);
+        return null;
+    }
+}
+
+export const updateUserPic = async(data:IUpdateUserPic)=>{
+    try {
+        const updatedUser = await client.user.update({
+            where:{
+                id:data.id,
+            },
+            data:{
+                pic:data.pic || "",
+                publicId:data.publicId || "",
+            }
+        });
+        return updatedUser;
     } catch (error) {
         if(error instanceof Error){
             console.log(error.message);

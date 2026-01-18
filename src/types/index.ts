@@ -1,7 +1,9 @@
 export type IUser = {
     username:string;
     email:string;
-    password:string
+    password:string;
+    pic?:string;
+    publicId?:string;
 }
 
 export type IUpdatePassword = {
@@ -38,3 +40,13 @@ export type IUpdatePost = {
     title: string;
     content?:string;
 }
+
+export type IID = {
+    id:number;
+}
+
+export type IUsername = Pick<IUser, "email"| "username">;
+
+export type IContent = Pick<IUpdatePost, "id" | "content">;
+
+export type IUpdateUserPic = Pick<IUser, "pic" | "publicId"> & IID;

@@ -30,6 +30,8 @@ model User{
   isBlocked Boolean @default(false)
   blogs Post[]
   comments Comment[]
+  pic String?
+  publicId String? @default("")
 }
 
 model Post {

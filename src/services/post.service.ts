@@ -1,6 +1,5 @@
 import {prisma as client} from "../lib/prisma.js";
-import type { IPost, IUpdatePost } from "../types/index.js";
-import { pushCategoryToPost } from "./category.service.js";
+import type { IContent, IPost, IUpdatePost } from "../types/index.js";
 
 export const blockPost = async(postId:number)=>{
     
@@ -164,6 +163,27 @@ export const getPostByCategories = async(id:number)=>{
             }
         });
         return posts;
+    } catch (error) {
+        if(error instanceof Error){
+            console.log(error.message);
+            return null;
+        }
+        console.log(error);
+        return null;
+    }
+}
+
+export const updateContent = async({content, id}:IContent)=>{
+    try {
+        const updatedPost = await client.post.update({
+            where:{
+                id:id,
+            },
+            data:{
+                content:content||"",
+            }
+        });
+        return updatedPost;
     } catch (error) {
         if(error instanceof Error){
             console.log(error.message);

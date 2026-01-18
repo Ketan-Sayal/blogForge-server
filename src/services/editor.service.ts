@@ -1,14 +1,16 @@
 import {prisma as client, ROLES} from "../lib/prisma.js";
 import type { IUser } from "../types/index.js";
 
-export const createEditor = async({username, email, password}:IUser)=>{
+export const createEditor = async({username, email, password, pic, publicId}:IUser)=>{
     try {
         const res = await client.user.create({
         data:{
             username,
             email,
             password,
-            role:ROLES.EDITOR
+            role:ROLES.EDITOR,
+            pic:pic || "https://cdn-icons-png.flaticon.com/128/456/456212.png",
+            publicId: publicId || ""
         },
         select:{
             id:true,
