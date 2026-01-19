@@ -21,3 +21,21 @@ export const isLoggedIn = async(req:Request, res:Response, next:NextFunction)=>{
         res.status(403).json(new ApiError(403, "User must login"));
     }
 }
+
+export const isAdmin = async(req:Request, res:Response, next:NextFunction)=>{
+     try {
+        const token = req.headers.authorization_admin || req.cookies.auth_admin_token;
+        if(!token){
+            throw new ApiError(403);
+        }
+        const decoded = jwt.verify(token, config.jwtAdminSecret) as JwtPayload;
+        const user = await getUserById(parseInt(decoded.id));
+        if(!user){
+            throw new ApiError(403);
+        }
+        req.userId = user.id;
+        next();
+    } catch (error) {
+        res.status(403).json(new ApiError(403, "User must login"));
+    }
+}

@@ -1,3 +1,15 @@
+export type IConfig = {
+    port:number;
+    jwtUserSecret:string;
+    cloudinaryApiKey:string;
+    cloudinaryApiSecret:string;
+    cloudName:string;
+    jwtAdminSecret:string;
+    jwtAurthorSecret:string;
+    jwtContributorSecret:string;
+    jwtEditorSecret:string;
+}
+
 export type IUser = {
     username:string;
     email:string;
@@ -31,7 +43,7 @@ export type IPost = {
 }
 
 export type IPostCategory= {
-    categoryId:number,
+    categoryId:number;
     postId:number
 }
 
