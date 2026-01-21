@@ -41,7 +41,8 @@ export const getUserById = async(id:number)=>{
             username:true,
             email:true,
             blogs:true,
-            comments:true
+            comments:true,
+            role:true
         }
     });
     return user;

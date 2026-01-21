@@ -34,7 +34,7 @@ export const signup = asyncHandler(async(req:Request, res:Response, _:NextFuncti
         throw new ApiError(500);
     }
     const token = jwt.sign({id:user.id}, config.jwtEditorSecret);
-    return res.status(201).cookie("auth_admin_token", token).json(new ApiResponse(201, {user, token}, "User sent successfully"));
+    return res.status(201).cookie("auth_editor_token", token).json(new ApiResponse(201, {user, token}, "User sent successfully"));
 });
 
 export const signin = asyncHandler(async(req:Request, res:Response, _:NextFunction)=>{
@@ -57,5 +57,5 @@ export const signin = asyncHandler(async(req:Request, res:Response, _:NextFuncti
         throw new ApiError(500);
     }
     const token = jwt.sign({id:user.id}, config.jwtEditorSecret);
-    return res.status(200).cookie("auth_admin_token", token).json(new ApiResponse(200, {user, token}, "User logged in successfully"));
+    return res.status(200).cookie("auth_editor_token", token).json(new ApiResponse(200, {user, token}, "User logged in successfully"));
 });
