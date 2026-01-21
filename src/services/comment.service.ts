@@ -81,6 +81,24 @@ export const getPostComments = async(postId:number)=>{
     } catch (error) {
         if(error instanceof Error){
             console.log(error.message);
+            throw error;
+        }
+        console.log(error);
+        throw error;
+    }
+}
+
+export const getCommentById = async(id:number)=>{
+    try {
+        const comment = await client.comment.findFirst({
+            where:{
+                id:id
+            }
+        });
+        return comment;
+    } catch (error) {
+        if(error instanceof Error){
+            console.log(error.message);
             return null;
         }
         console.log(error);

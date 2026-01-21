@@ -57,9 +57,9 @@ export const getPostCategories = async(postId:number)=>{
     } catch (error) {
         if(error instanceof Error){
             console.log(error.message);
-            return null;
+            throw error;
         }
         console.log(error);
-        return null;
+        throw error;
     }
 }
