@@ -116,6 +116,20 @@ export const updatePost = async(data:IUpdatePost)=>{
     }
 }
 
+export const getAllPosts = async()=>{
+    try {
+        const posts = await client.post.findMany();
+        return posts;
+    } catch (error) {
+        if(error instanceof Error){
+            console.log(error.message);
+            return null;
+        }
+        console.log(error);
+        return null;
+    }
+}
+
 export const getPostById = async(id:number)=>{
     try {
         const post = await client.post.findFirst({
