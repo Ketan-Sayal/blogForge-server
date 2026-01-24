@@ -111,6 +111,7 @@ export const getUserByEmail = async(email:string)=>{
             id:true,
             username:true,
             email:true,
+            role:true,
         }
     });
     return user;

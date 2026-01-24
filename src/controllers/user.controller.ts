@@ -8,6 +8,7 @@ import { ApiError } from "../utils/ApiError.js";
 import { config } from "../config/index.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { upload } from "../utils/Cloudinary.js";
+import { ROLES } from "../lib/prisma.js";
 
 const signup = asyncHandler(async(req:Request, res:Response, _:NextFunction)=>{
     const {username, email, password} = req.body;
@@ -45,6 +46,9 @@ const signin = asyncHandler(async(req:Request, res:Response, _:NextFunction)=>{
     const existingUser = await getUserByEmail(email);
     if(!existingUser){
         throw new ApiError(403, "User doesn't exists");
+    }
+    if(existingUser.role!==ROLES.USER){
+        throw new ApiError(403, "User is not an user");
     }
     const userHash = await getUserPassword(existingUser.id);
     const isPasswordCorrect = await bcrypt.compare(password, userHash || '');

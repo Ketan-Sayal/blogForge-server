@@ -9,6 +9,7 @@ import { upload } from "../utils/Cloudinary.js";
 import { config } from "../config/index.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { createAurthor } from "../services/aurthor.service.js";
+import { ROLES } from "../lib/prisma.js";
 
 export const signup = asyncHandler(async(req:Request, res:Response, _:NextFunction)=>{
     const {username, email, password} = req.body;
@@ -47,6 +48,10 @@ export const signin = asyncHandler(async(req:Request, res:Response, _:NextFuncti
     if(!existingUser){
         throw new ApiError(403, "User doesn't exists");
     }
+    if(existingUser.role!==ROLES.AURTHOR){
+        throw new ApiError(403, "User is not an aurthor");
+    }
+    
     const userHash = await getUserPassword(existingUser.id);
     const isPasswordCorrect = await bcrypt.compare(password, userHash || '');
     if(!isPasswordCorrect){
